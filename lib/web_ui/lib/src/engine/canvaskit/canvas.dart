@@ -125,8 +125,8 @@ class CkCanvas {
 
   void drawDRRect(ui.RRect outer, ui.RRect inner, CkPaint paint) {
     skCanvas.drawDRRect(
-      toSkRRect(outer),
-      toSkRRect(inner),
+      toSharedSkRRect1(outer),
+      toSharedSkRRect2(inner),
       paint.skiaObject,
     );
   }
@@ -159,8 +159,8 @@ class CkCanvas {
     if (filterQuality == ui.FilterQuality.high) {
       skCanvas.drawImageRectCubic(
         image.skImage,
-        toSkRect(src),
-        toSkRect(dst),
+        toSharedSkRect1(src),
+        toSharedSkRect2(dst),
         _kMitchellNetravali_B,
         _kMitchellNetravali_C,
         paint.skiaObject,
@@ -168,8 +168,8 @@ class CkCanvas {
     } else {
       skCanvas.drawImageRectOptions(
         image.skImage,
-        toSkRect(src),
-        toSkRect(dst),
+        toSharedSkRect1(src),
+        toSharedSkRect2(dst),
         toSkFilterMode(filterQuality),
         toSkMipmapMode(filterQuality),
         paint.skiaObject,
@@ -181,8 +181,8 @@ class CkCanvas {
       CkImage image, ui.Rect center, ui.Rect dst, CkPaint paint) {
     skCanvas.drawImageNine(
       image.skImage,
-      toSkRect(center),
-      toSkRect(dst),
+      toSharedSkRect1(center),
+      toSharedSkRect2(dst),
       toSkFilterMode(paint.filterQuality),
       paint.skiaObject,
     );
@@ -928,8 +928,8 @@ class CkDrawDRRectCommand extends CkPaintCommand {
   @override
   void apply(SkCanvas canvas) {
     canvas.drawDRRect(
-      toSkRRect(outer),
-      toSkRRect(inner),
+      toSharedSkRRect1(outer),
+      toSharedSkRRect2(inner),
       paint.skiaObject,
     );
   }
@@ -1049,8 +1049,8 @@ class CkDrawImageRectCommand extends CkPaintCommand {
     if (filterQuality == ui.FilterQuality.high) {
       canvas.drawImageRectCubic(
         image.skImage,
-        toSkRect(src),
-        toSkRect(dst),
+        toSharedSkRect1(src),
+        toSharedSkRect2(dst),
         CkCanvas._kMitchellNetravali_B,
         CkCanvas._kMitchellNetravali_C,
         paint.skiaObject,
@@ -1058,8 +1058,8 @@ class CkDrawImageRectCommand extends CkPaintCommand {
     } else {
       canvas.drawImageRectOptions(
         image.skImage,
-        toSkRect(src),
-        toSkRect(dst),
+        toSharedSkRect1(src),
+        toSharedSkRect2(dst),
         toSkFilterMode(filterQuality),
         toSkMipmapMode(filterQuality),
         paint.skiaObject,
@@ -1086,8 +1086,8 @@ class CkDrawImageNineCommand extends CkPaintCommand {
   void apply(SkCanvas canvas) {
     canvas.drawImageNine(
       image.skImage,
-      toSkRect(center),
-      toSkRect(dst),
+      toSharedSkRect1(center),
+      toSharedSkRect2(dst),
       toSkFilterMode(paint.filterQuality),
       paint.skiaObject,
     );

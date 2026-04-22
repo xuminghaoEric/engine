@@ -1565,9 +1565,24 @@ extension SkContourMeasureExtension on SkContourMeasure {
   external void delete();
 }
 
-// TODO(hterkelsen): Use a shared malloc'ed array for performance.
+final SkFloat32List _sharedSkRect1 = mallocFloat32List(4);
+final SkFloat32List _sharedSkRect2 = mallocFloat32List(4);
+
 Float32List toSkRect(ui.Rect rect) {
-  final Float32List skRect = Float32List(4);
+  return toSharedSkRect1(rect);
+}
+
+Float32List toSharedSkRect1(ui.Rect rect) {
+  final Float32List skRect = _sharedSkRect1.toTypedArray();
+  skRect[0] = rect.left;
+  skRect[1] = rect.top;
+  skRect[2] = rect.right;
+  skRect[3] = rect.bottom;
+  return skRect;
+}
+
+Float32List toSharedSkRect2(ui.Rect rect) {
+  final Float32List skRect = _sharedSkRect2.toTypedArray();
   skRect[0] = rect.left;
   skRect[1] = rect.top;
   skRect[2] = rect.right;
@@ -1588,9 +1603,15 @@ ui.Rect rectFromSkIRect(Int32List skIRect) {
   );
 }
 
-// TODO(hterkelsen): Use a shared malloc'ed array for performance.
+final SkFloat32List _sharedSkRRect1 = mallocFloat32List(12);
+final SkFloat32List _sharedSkRRect2 = mallocFloat32List(12);
+
 Float32List toSkRRect(ui.RRect rrect) {
-  final Float32List skRRect = Float32List(12);
+  return toSharedSkRRect1(rrect);
+}
+
+Float32List toSharedSkRRect1(ui.RRect rrect) {
+  final Float32List skRRect = _sharedSkRRect1.toTypedArray();
   skRRect[0] = rrect.left;
   skRRect[1] = rrect.top;
   skRRect[2] = rrect.right;
@@ -1606,9 +1627,27 @@ Float32List toSkRRect(ui.RRect rrect) {
   return skRRect;
 }
 
-// TODO(hterkelsen): Use a shared malloc'ed array for performance.
+Float32List toSharedSkRRect2(ui.RRect rrect) {
+  final Float32List skRRect = _sharedSkRRect2.toTypedArray();
+  skRRect[0] = rrect.left;
+  skRRect[1] = rrect.top;
+  skRRect[2] = rrect.right;
+  skRRect[3] = rrect.bottom;
+  skRRect[4] = rrect.tlRadiusX;
+  skRRect[5] = rrect.tlRadiusY;
+  skRRect[6] = rrect.trRadiusX;
+  skRRect[7] = rrect.trRadiusY;
+  skRRect[8] = rrect.brRadiusX;
+  skRRect[9] = rrect.brRadiusY;
+  skRRect[10] = rrect.blRadiusX;
+  skRRect[11] = rrect.blRadiusY;
+  return skRRect;
+}
+
+final SkFloat32List _sharedOuterSkRect1 = mallocFloat32List(4);
+
 Float32List toOuterSkRect(ui.RRect rrect) {
-  final Float32List skRect = Float32List(4);
+  final Float32List skRect = _sharedOuterSkRect1.toTypedArray();
   skRect[0] = rrect.left;
   skRect[1] = rrect.top;
   skRect[2] = rrect.right;
